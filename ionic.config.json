@@ -1,5 +1,7 @@
 {
   "name": "ionic4-text-speech",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }

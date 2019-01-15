@@ -1,12 +1,76 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>
-      Ionic Blank
+<ion-header no-border padding>
+  <ion-toolbar padding>
+    <ion-title style="text-align: center;">
+      AFFIRM-O-MATIC
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
-  The world is your oyster.
-  <p>If you get lost, the <a target="_blank" rel="noopener" href="https://beta.ionicframework.com/docs/">docs</a> will be your guide.</p>
+
+
+
+  <ion-list>
+    <!--SpeechText-->
+    <ion-item>
+      <ion-label position="floating">Your message...</ion-label>
+      <ion-input [(ngModel)]="speechText"></ion-input>
+    </ion-item>
+    <!--Language>
+    <ion-item>
+      <ion-label>Language</ion-label>
+      <ion-select [(ngModel)]="language">
+        <ion-select-option value="en-US">English</ion-select-option>
+        <ion-select-option value="ru-RU">Russian</ion-select-option>
+      </ion-select>
+    </ion-item-->
+    <ion-item>
+      <ion-range min="0" max="10" step="1" [(ngModel)]="talkSpeed">
+        <ion-icon small range-left name="remove"></ion-icon>
+        <ion-icon small range-right name="add"></ion-icon>
+      </ion-range>
+    </ion-item>
+  </ion-list>
+
+
+
 </ion-content>
+
+<ion-footer no-border padding>
+  <ion-toolbar>
+  <!--ion-input type="number">
+  </ion-input-->
+
+
+
+  <ion-buttons slot="end">
+  <ion-button shape="round">
+    <ion-icon name="remove">
+    </ion-icon>
+  </ion-button>
+
+
+
+  <ion-button shape="round" (click)="speakText()">
+    <ion-icon name="add">
+    </ion-icon>
+  </ion-button>
+
+
+
+  <ion-button fill="solid" shape="round" (click)="listen()">
+    <ion-icon name="mic">
+    </ion-icon>
+  </ion-button>
+
+
+
+  <ion-button fill="solid" shape="round" (click)="speakText()">
+    <ion-icon name="play">
+    </ion-icon>
+  </ion-button>
+  </ion-buttons>
+
+
+</ion-toolbar>
+</ion-footer>
