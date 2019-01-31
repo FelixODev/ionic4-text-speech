@@ -1,6 +1,6 @@
 <ion-header no-border padding>
   <ion-toolbar padding>
-    <ion-title style="text-align: center;">
+    <ion-title text-center>
       AFFIRM-O-MATIC
     </ion-title>
   </ion-toolbar>
@@ -36,14 +36,14 @@
 
 </ion-content>
 
-<ion-footer no-border padding>
+<ion-footer no-border padding-horizontal>
   <ion-toolbar>
   <!--ion-input type="number">
   </ion-input-->
 
 
 
-  <ion-buttons slot="end">
+  <ion-buttons slot="end" margin-horizontal>
   <ion-button shape="round">
     <ion-icon name="remove">
     </ion-icon>
@@ -51,25 +51,25 @@
 
 
 
-  <ion-button shape="round" (click)="speakText()">
+  <ion-button #btn shape="round" (click)="speakText()">
     <ion-icon name="add">
     </ion-icon>
   </ion-button>
+  </ion-buttons>
 
 
 
-  <ion-button fill="solid" shape="round" (click)="listen()">
+  <ion-button slot="end" shape="round" (click)="listen()">
     <ion-icon name="mic">
     </ion-icon>
   </ion-button>
 
 
 
-  <ion-button fill="solid" shape="round" (click)="speakText()">
+  <ion-button slot="end" shape="round" (click)="speakText()">
     <ion-icon name="play">
     </ion-icon>
   </ion-button>
-  </ion-buttons>
 
 
 </ion-toolbar>

@@ -1,15 +1,18 @@
 {
   "name": "ionic4-text-speech",
   "version": "0.0.1",
-  "author": "Ionic Framework",
-  "homepage": "http://ionicframework.com/",
+  "author": "Felix O.",
+  "homepage": "",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "deploy": "ng build && firebase deploy",
+    "gh": "ng build --prod --base-href 'https://fostack.github.io/ionic4-text-speech/' && angular-cli-ghpages --repo=https://fostack:F0j3500.@github.com/fostack/ionic4-text-speech.git --dir=www/",
+    "gh-pages": "ng build --prod --base-href 'https://fostack.github.io/ionic4-text-speech/' && npx ngh --dir=www"
   },
   "private": true,
   "dependencies": {
@@ -19,7 +22,9 @@
     "@angular/http": "~7.1.4",
     "@angular/platform-browser": "~7.1.4",
     "@angular/platform-browser-dynamic": "~7.1.4",
+    "@angular/pwa": "0.12.2",
     "@angular/router": "~7.1.4",
+    "@angular/service-worker": "~7.1.4",
     "@ionic-native/core": "5.0.0-beta.21",
     "@ionic-native/local-notifications": "5.0.0-beta.23",
     "@ionic-native/speech-recognition": "5.0.0-beta.23",

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 
 import { SpeechRecognition } from '@ionic-native/speech-recognition/ngx';
 import { TextToSpeech } from '@ionic-native/text-to-speech/ngx';
@@ -17,6 +17,8 @@ export class HomePage {
   talkSpeed: number;
   /**/
 
+  @ViewChild('btn') btn;
+
   constructor(
     private speechRecognition: SpeechRecognition,
     private tts: TextToSpeech,
@@ -34,8 +36,8 @@ export class HomePage {
 
   ionViewDidLoad(){
     // Check feature available
-    this.speechRecognition.isRecognitionAvailable()
-      .then((available: boolean) => console.log(available));
+    //this.speechRecognition.isRecognitionAvailable()
+      //.then((available: boolean) => console.log(available));
   }
 
 
@@ -66,18 +68,35 @@ export class HomePage {
 
 
   listen(){
-    // Check permission
-    this.speechRecognition.hasPermission()
-      .then((hasPermission: boolean) => {
-        console.log(hasPermission)
 
-        this.speechRecognition.startListening(options)
-        .subscribe(
-          (matches: string[]) => console.log(matches),
-          (onerror) => console.log('error:', onerror)
-        );
-      });
-
+    /**///browser implementation
+    try {
+      const SpeechRecognition = (<any>window).SpeechRecognition
+      || (<any>window).webkitSpeechRecognition
+      || (<any>window).mozSpeechRecognition
+      || (<any>window).msSpeechRecognition;
+      const recognition = new SpeechRecognition();
+      recognition.start();
+      recognition.onresult = (event) => {
+        this.speechText = event.results[0][0].transcript;
+        console.log(this.speechText);
+        recognition.stop();
+      }
+      this.reFocus();
+    }
+    catch(e) {
+      console.error(e);
+    }/**/
   }
+
+
+
+  reFocus() {
+    setTimeout(() => {
+      this.btn.setFocus();
+    },150);
+  }
+
+
 
 }
