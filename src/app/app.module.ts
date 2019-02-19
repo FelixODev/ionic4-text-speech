@@ -11,6 +11,7 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { SpeechRecognition,SpeechRecognitionListeningOptions } from '@ionic-native/speech-recognition/ngx';
 import { Observable, from, of, throwError } from 'rxjs';
+import { delay } from "rxjs/operators";
 import { TextToSpeech, TTSOptions } from "@ionic-native/text-to-speech/ngx";
 import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 import { ServiceWorkerModule } from '@angular/service-worker';
@@ -18,23 +19,40 @@ import { environment } from '../environments/environment';
 
 
 
-/**/
+
+
 export class SpeechRecognitionMock extends SpeechRecognition {
 
+  private transcript: any;
 
+  startListening():Observable<any> {
 
-  startListening(): any/**/{
+    const SpeechRecognition = (<any>window).SpeechRecognition
+    || (<any>window).webkitSpeechRecognition
+    || (<any>window).mozSpeechRecognition
+    || (<any>window).msSpeechRecognition;
+
+    const sp = new SpeechRecognition();
+
+    sp.start();
+
+    sp.onresult = (event) => {
+      this.transcript = event.results[0][0].transcript;
+      sp.stop();
+      console.log(event.results[0][0].transcript);
+      return event.results[0][0].transcript;
+    }
+
+    return of(this.transcript);
   }
-
-
-
 }
-/**/
 
 
 
-/**/
+
+
 export class TextToSpeechMock extends TextToSpeech {
+
   private synth:SpeechSynthesis = window.speechSynthesis;
 
   speak(textOrOptions: /*string | /**/TTSOptions): Promise<any>{
@@ -50,6 +68,7 @@ export class TextToSpeechMock extends TextToSpeech {
     //}
 
     let utterThis:SpeechSynthesisUtterance = new SpeechSynthesisUtterance(text);
+
     if (rate){
       utterThis.rate = rate;
     }
@@ -58,7 +77,6 @@ export class TextToSpeechMock extends TextToSpeech {
     }
 
     this.synth.speak(utterThis);
-
     return Promise.resolve(true);
   }
 
@@ -67,7 +85,8 @@ export class TextToSpeechMock extends TextToSpeech {
     return Promise.resolve(true);
   }
 }
-/**/
+
+
 
 @NgModule({
   declarations: [AppComponent],

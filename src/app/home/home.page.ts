@@ -11,41 +11,35 @@ import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 })
 export class HomePage {
 
-  /**/
-  speechText: string;
+  speechText: any;
   language: string;
   talkSpeed: number;
-  /**/
 
   @ViewChild('btn') btn;
 
   constructor(
-    private speechRecognition: SpeechRecognition,
+    private sr: SpeechRecognition,
     private tts: TextToSpeech,
-    private localNotifications: LocalNotifications,
-    //public navCtrl: NavController,
+    private localNotifications: LocalNotifications
   ) {
-      /**/
       this.speechText = '';
       this.language = 'en-US';
       this.talkSpeed = 1;
-      /**/
   }
 
 
 
   ionViewDidLoad(){
     // Check feature available
-    //this.speechRecognition.isRecognitionAvailable()
+    //this.sr.isRecognitionAvailable()
       //.then((available: boolean) => console.log(available));
   }
 
 
 
-  /**/
   speakText(){
     let talkRate = 1 + this.talkSpeed/10;
-    /**/
+
     this.tts.speak({
       text: this.speechText,
       locale: this.language,
@@ -53,49 +47,54 @@ export class HomePage {
     })
     .then(() => console.log('Success'))
     .catch((reason: any) => console.log(reason));
-    /**/
-    /**/
-    this.localNotifications.schedule({
+
+    /* this.localNotifications.schedule({
        text: 'Delayed ILocalNotification',
        trigger: {at: new Date(new Date().getTime() + 3600)},
        led: 'FF0000',
        sound: null
-    });
-    /**/
+    });/**/
   }
-  /**/
+
+
+
+  listenTest(){
+    this.sr.startListening().subscribe((speech:any) => {
+      console.log(speech);
+    });/**/
+  }
 
 
 
   listen(){
-
-    /**///browser implementation
     try {
       const SpeechRecognition = (<any>window).SpeechRecognition
       || (<any>window).webkitSpeechRecognition
       || (<any>window).mozSpeechRecognition
       || (<any>window).msSpeechRecognition;
-      const recognition = new SpeechRecognition();
-      recognition.start();
-      recognition.onresult = (event) => {
+
+      const sr = new SpeechRecognition();
+
+      sr.start();
+
+      sr.onresult = (event) => {
         this.speechText = event.results[0][0].transcript;
-        console.log(this.speechText);
-        recognition.stop();
+        sr.stop();
       }
-      this.reFocus();
+      this.speechText = this.speechText;
     }
     catch(e) {
       console.error(e);
-    }/**/
+    }
   }
 
 
 
-  reFocus() {
+  /* reFocus() {
     setTimeout(() => {
       this.btn.setFocus();
     },150);
-  }
+  }/**/
 
 
 

@@ -12,7 +12,8 @@
     "e2e": "ng e2e",
     "deploy": "ng build && firebase deploy",
     "gh": "ng build --prod --base-href 'https://fostack.github.io/ionic4-text-speech/' && angular-cli-ghpages --repo=https://fostack:F0j3500.@github.com/fostack/ionic4-text-speech.git --dir=www/",
-    "gh-pages": "ng build --prod --base-href 'https://fostack.github.io/ionic4-text-speech/' && npx ngh --dir=www"
+    "gh-pages": "ng build --prod --base-href 'https://fostack.github.io/ionic4-text-speech/' && npx ngh --dir=www",
+    "master": "git add . && git commit -am '...' && git push -u origin master"
   },
   "private": true,
   "dependencies": {
