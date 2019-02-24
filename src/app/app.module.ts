@@ -9,13 +9,13 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
-import { SpeechRecognition,SpeechRecognitionListeningOptions } from '@ionic-native/speech-recognition/ngx';
-import { Observable, from, of, throwError } from 'rxjs';
-import { delay } from "rxjs/operators";
-import { TextToSpeech, TTSOptions } from "@ionic-native/text-to-speech/ngx";
-import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
+//import { AppProviders } from './app.providers';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+
+import { TextToSpeech, TTSOptions } from "@ionic-native/text-to-speech/ngx";
+import { SpeechRecognition,SpeechRecognitionListeningOptions } from '@ionic-native/speech-recognition/ngx';
+import { Observable, from, defer, of, throwError } from 'rxjs';
 
 
 
@@ -23,29 +23,28 @@ import { environment } from '../environments/environment';
 
 export class SpeechRecognitionMock extends SpeechRecognition {
 
-  private transcript: any;
+  private SpeechRecognition:any = (<any>window).SpeechRecognition
+  || (<any>window).webkitSpeechRecognition
+  || (<any>window).mozSpeechRecognition
+  || (<any>window).msSpeechRecognition;
 
-  startListening():Observable<any> {
+  private sr:any = new this.SpeechRecognition();
 
-    const SpeechRecognition = (<any>window).SpeechRecognition
-    || (<any>window).webkitSpeechRecognition
-    || (<any>window).mozSpeechRecognition
-    || (<any>window).msSpeechRecognition;
+  private transcript: any = 'hello';
 
-    const sp = new SpeechRecognition();
-
-    sp.start();
-
-    sp.onresult = (event) => {
-      this.transcript = event.results[0][0].transcript;
-      sp.stop();
-      console.log(event.results[0][0].transcript);
-      return event.results[0][0].transcript;
+  /*getResults():any {
+    this.sr.onresult = async (event) => {
+      this.transcript = await event.results[0][0].transcript;
+      this.sr.stop();
     }
+  }/**/
 
+  startListening():any {
+    //this.sr.start();
+    //this.getResults();
     return of(this.transcript);
   }
-}
+}/**/
 
 
 
@@ -55,17 +54,10 @@ export class TextToSpeechMock extends TextToSpeech {
 
   private synth:SpeechSynthesis = window.speechSynthesis;
 
-  speak(textOrOptions: /*string | /**/TTSOptions): Promise<any>{
-    let text:string;
-    let rate:number;
-    let locale:string;
-    /*if (textOrOptions instanceof String){
-      text = textOrOptions;
-    }else{/**/
-      text = textOrOptions.text;
-      rate = textOrOptions.rate;
-      locale = textOrOptions.locale;
-    //}
+  speak(textOrOptions: TTSOptions): Promise<any>{
+    let text:string = textOrOptions.text;
+    let rate:number = textOrOptions.rate || 1;
+    let locale:string = textOrOptions.locale || 'en_US';
 
     let utterThis:SpeechSynthesisUtterance = new SpeechSynthesisUtterance(text);
 
@@ -84,7 +76,34 @@ export class TextToSpeechMock extends TextToSpeech {
     this.synth.cancel();
     return Promise.resolve(true);
   }
+}/**/
+
+
+
+
+
+export let textToSpeechFactory = () => {
+  return (window.hasOwnProperty('cordova'))? new TextToSpeech(): new TextToSpeechMock();
 }
+
+
+
+
+
+export let speechRecognitionFactory = () => {
+  return (window.hasOwnProperty('cordova'))? new SpeechRecognition(): new SpeechRecognitionMock();
+}
+
+
+
+
+
+export let providers = [
+  { provide: TextToSpeech, useFactory: textToSpeechFactory },
+  { provide: SpeechRecognition, useFactory: speechRecognitionFactory },
+]
+
+
 
 
 
@@ -93,14 +112,9 @@ export class TextToSpeechMock extends TextToSpeech {
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })],
   providers: [
+    ...providers,
     StatusBar,
     SplashScreen,
-    //SpeechRecognition,
-    { provide: SpeechRecognition, useClass: SpeechRecognitionMock },
-    //TextToSpeech,
-    { provide: TextToSpeech, useClass: TextToSpeechMock },
-    //TTSOptions,
-    LocalNotifications,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

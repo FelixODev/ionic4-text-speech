@@ -1,36 +1,52 @@
-<ion-header no-border padding>
-  <ion-toolbar padding>
+<ion-header no-border padding-vertical margin-vertical>
+  <ion-toolbar padding-vertical margin-vertical>
     <ion-title text-center>
-      AFFIRM-O-MATIC
+      <ion-text color="light">
+        <div class="titlebg">
+          <span>
+            AFFIRM-O-MATIC
+          </span>
+        </div>
+      </ion-text>
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content fullscreen>
 
 
+  <ion-grid class="front">
 
-  <ion-list>
-    <!--SpeechText-->
-    <ion-item>
-      <ion-label position="floating">Your message...</ion-label>
-      <ion-input [(ngModel)]="speechText"></ion-input>
-    </ion-item>
-    <!--Language>
-    <ion-item>
-      <ion-label>Language</ion-label>
-      <ion-select [(ngModel)]="language">
-        <ion-select-option value="en-US">English</ion-select-option>
-        <ion-select-option value="ru-RU">Russian</ion-select-option>
-      </ion-select>
-    </ion-item-->
-    <ion-item>
-      <ion-range min="0" max="10" step="1" [(ngModel)]="talkSpeed">
-        <ion-icon small range-left name="remove"></ion-icon>
-        <ion-icon small range-right name="add"></ion-icon>
-      </ion-range>
-    </ion-item>
-  </ion-list>
+    <ion-row align-items-start>
+      <ion-col class="message">
+      </ion-col>
+    </ion-row>
+    <ion-row align-items-center>
+      <ion-col>
+        <ion-list margin padding>
+          <!--SpeechText-->
+          <ion-item>
+            <ion-label position="floating">Your message...</ion-label>
+            <ion-input [(ngModel)]="speechText"></ion-input>
+          </ion-item>
+          <!--Language>
+          <ion-item>
+            <ion-label>Language</ion-label>
+            <ion-select [(ngModel)]="language">
+              <ion-select-option value="en-US">English</ion-select-option>
+              <ion-select-option value="ru-RU">Russian</ion-select-option>
+            </ion-select>
+          </ion-item-->
+          <ion-item>
+            <ion-range min="0" max="10" step="1" [(ngModel)]="talkSpeed">
+              <ion-icon small range-left name="remove"></ion-icon>
+              <ion-icon small range-right name="add"></ion-icon>
+            </ion-range>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
 
 
@@ -38,10 +54,6 @@
 
 <ion-footer no-border padding-horizontal>
   <ion-toolbar>
-  <!--ion-input type="number">
-  </ion-input-->
-
-
 
   <ion-buttons slot="end" margin-horizontal>
   <ion-button shape="round">
@@ -49,22 +61,16 @@
     </ion-icon>
   </ion-button>
 
-
-
   <ion-button #btn shape="round" (click)="speakText()">
     <ion-icon name="add">
     </ion-icon>
   </ion-button>
   </ion-buttons>
 
-
-
   <ion-button slot="end" shape="round" (click)="listen()">
     <ion-icon name="mic">
     </ion-icon>
   </ion-button>
-
-
 
   <ion-button slot="end" shape="round" (click)="speakText()">
     <ion-icon name="play">

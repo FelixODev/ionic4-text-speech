@@ -1,1 +1,32 @@
+ion-toolbar {
+--background: transparent;
+--ion-color-base: transparent !important;
+}
 
+ion-content {
+  --background: radial-gradient(
+    rgba(100, 75, 125, 0.0),
+    rgba(100, 75, 125, 0.0)
+  ),
+  url("/../../assets/images/curve1.svg") no-repeat center center / cover;
+}
+
+@media only screen and (min-width: 678px){
+  .titlebg {
+    border-radius: 50px;
+    height: 50px;
+    background-color: #45A8EF;
+    width: 200px;
+    margin: auto;
+    span {
+      line-height: 2.5 !important;
+    }
+  }
+}
+
+.front {
+  .message {
+    height: 15vh;
+  }
+  height: 100%;
+}

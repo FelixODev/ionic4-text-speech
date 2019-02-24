@@ -1,8 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 
-import { SpeechRecognition } from '@ionic-native/speech-recognition/ngx';
 import { TextToSpeech } from '@ionic-native/text-to-speech/ngx';
-import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
+import { SpeechRecognition } from '@ionic-native/speech-recognition/ngx';
 
 @Component({
   selector: 'app-home',
@@ -15,12 +14,9 @@ export class HomePage {
   language: string;
   talkSpeed: number;
 
-  @ViewChild('btn') btn;
-
   constructor(
-    private sr: SpeechRecognition,
-    private tts: TextToSpeech,
-    private localNotifications: LocalNotifications
+  private tts: TextToSpeech,
+  private sr: SpeechRecognition,
   ) {
       this.speechText = '';
       this.language = 'en-US';
@@ -47,20 +43,15 @@ export class HomePage {
     })
     .then(() => console.log('Success'))
     .catch((reason: any) => console.log(reason));
-
-    /* this.localNotifications.schedule({
-       text: 'Delayed ILocalNotification',
-       trigger: {at: new Date(new Date().getTime() + 3600)},
-       led: 'FF0000',
-       sound: null
-    });/**/
   }
 
 
 
-  listenTest(){
+  listen2(){
     this.sr.startListening().subscribe((speech:any) => {
-      console.log(speech);
+      this.speechText = speech;
+    }, (onerror) => {
+      console.log('error:', onerror)
     });/**/
   }
 
@@ -77,24 +68,18 @@ export class HomePage {
 
       sr.start();
 
-      sr.onresult = (event) => {
-        this.speechText = event.results[0][0].transcript;
+      sr.onresult = async (event) => {
+        this.speechText = await event.results[0][0].transcript;
+        //console.log(sr.onresult());
+        //return of()
         sr.stop();
       }
-      this.speechText = this.speechText;
+
     }
     catch(e) {
       console.error(e);
     }
   }
-
-
-
-  /* reFocus() {
-    setTimeout(() => {
-      this.btn.setFocus();
-    },150);
-  }/**/
 
 
 
