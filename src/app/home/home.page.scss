@@ -9,6 +9,16 @@ ion-content {
     rgba(100, 75, 125, 0.0)
   ),
   url("/../../assets/images/curve1.svg") no-repeat center center / cover;
+
+}
+
+.titlebg {
+  font-weight: 700;
+  font-size: 25px;
+}
+
+.title span {
+  font-size: 30px;
 }
 
 @media only screen and (min-width: 678px){
@@ -16,17 +26,37 @@ ion-content {
     border-radius: 50px;
     height: 50px;
     background-color: #45A8EF;
-    width: 200px;
+    width: 250px;
     margin: auto;
-    span {
-      line-height: 2.5 !important;
+    .title {
+      line-height: 1.5 !important;
     }
   }
 }
 
 .front {
   .message {
-    height: 15vh;
+    height: 10vh;
   }
   height: 100%;
+}
+
+.pill {
+  --background: #e5e5e5;
+  --border-radius: 15px;
+  --highlight-height: 0;
+  //--highlight-color-focused: #284d8f;
+}
+
+ion-item {
+  max-width: 500px;
+  margin: auto;
+}
+
+ion-footer {
+  border-radius: 25px;
+  width: 300px;
+  margin: auto;
+  margin-bottom: 15px;
+  box-shadow: 0px 0px 5px 1px #555;
 }

@@ -3,8 +3,8 @@
     <ion-title text-center>
       <ion-text color="light">
         <div class="titlebg">
-          <span>
-            AFFIRM-O-MATIC
+          <span class="title">
+            AFFIRM-<span style="font-weight: 900;">O</span>-MATIC
           </span>
         </div>
       </ion-text>
@@ -23,11 +23,10 @@
     </ion-row>
     <ion-row align-items-center>
       <ion-col>
-        <ion-list margin padding>
+        <ion-list margin padding lines="none">
           <!--SpeechText-->
-          <ion-item>
-            <ion-label position="floating">Your message...</ion-label>
-            <ion-input [(ngModel)]="speechText"></ion-input>
+          <ion-item class="pill">
+            <ion-input [(ngModel)]="speechText" placeholder="Your message..." ></ion-input>
           </ion-item>
           <!--Language>
           <ion-item>
@@ -53,30 +52,31 @@
 </ion-content>
 
 <ion-footer no-border padding-horizontal>
-  <ion-toolbar>
 
-  <ion-buttons slot="end" margin-horizontal>
-  <ion-button shape="round">
-    <ion-icon name="remove">
-    </ion-icon>
-  </ion-button>
+<!--ion-item-->
+  <ion-toolbar class=".pill-outline">
+    <ion-buttons slot="end" margin-horizontal>
+      <ion-button shape="round">
+        <ion-icon name="remove">
+        </ion-icon>
+      </ion-button>
 
-  <ion-button #btn shape="round" (click)="speakText()">
-    <ion-icon name="add">
-    </ion-icon>
-  </ion-button>
-  </ion-buttons>
+      <ion-button #btn shape="round" (click)="speakText()">
+        <ion-icon name="add">
+        </ion-icon>
+      </ion-button>
+    </ion-buttons>
 
-  <ion-button slot="end" shape="round" (click)="listen()">
-    <ion-icon name="mic">
-    </ion-icon>
-  </ion-button>
+    <ion-button slot="end" shape="round" (click)="listen()">
+      <ion-icon name="mic">
+      </ion-icon>
+    </ion-button>
 
-  <ion-button slot="end" shape="round" (click)="speakText()">
-    <ion-icon name="play">
-    </ion-icon>
-  </ion-button>
+    <ion-button slot="end" shape="round" (click)="speakText()">
+      <ion-icon name="play">
+      </ion-icon>
+    </ion-button>
+  </ion-toolbar>
+<!--/ion-item-->
 
-
-</ion-toolbar>
 </ion-footer>
