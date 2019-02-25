@@ -7,4 +7,5 @@ Browser and device ready through the use of factories.
 Native or mock native functionality.
 
 - Speech Recognition is not complete
-
+- Chrome and Firefox supported
+- Android and iOS supported
