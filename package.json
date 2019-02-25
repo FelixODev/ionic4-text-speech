@@ -4,6 +4,7 @@
   "author": "Felix O.",
   "homepage": "",
   "scripts": {
+    "fire": "ng build && firebase deploy",
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
